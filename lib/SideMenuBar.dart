@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_keep_notes_clone/ArchiveView.dart';
+import 'package:google_keep_notes_clone/Setting.dart';
 import 'package:google_keep_notes_clone/colors.dart';
 
 
@@ -25,27 +27,32 @@ class _SideMenuState extends State<SideMenu> {
 
               Container(
 
-                  margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+                  margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
                   child: Text(
                     "Google Keep",
-                    style: TextStyle(
+                     style:const TextStyle(
                         color: white,
                         fontWeight: FontWeight.bold,
                         fontSize: 25),
                   )),
 
+
               Divider(
                 color: white.withOpacity(0.3),
               ),
 
-              sectionOne(),
-              SizedBox(
+             sectionOne(),
+
+             const SizedBox(
                 height: 10,
               ),
-              sectionTwo(),
-              SizedBox(
+
+             sectionTwo(),
+
+             const SizedBox(
                 height: 10,
               ),
+
               sectionSetting()
               
         ],)),
@@ -57,6 +64,12 @@ class _SideMenuState extends State<SideMenu> {
 
 
 
+
+
+
+
+
+// TODO Create Widget sectionOne
 Widget sectionOne()
   {
     return Container(
@@ -102,7 +115,7 @@ Widget sectionOne()
 
 
 
-
+// TODO Create Widget sectionTwo
  Widget sectionTwo()
   {
     return Container(
@@ -117,7 +130,11 @@ Widget sectionOne()
                       topRight: Radius.circular(50),
                       bottomRight: Radius.circular(50)),
                 ))),
-                  onPressed: () {},
+                  onPressed: () {
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ArchiveView()));
+                    
+                  },
                   child: Container(
                     padding: EdgeInsets.all(5),
                     child: Row(
@@ -148,6 +165,11 @@ Widget sectionOne()
 
 
 
+
+
+
+
+// TODO Create Widget sectionSetting
 Widget sectionSetting()
   {
     return Container(
@@ -163,7 +185,7 @@ Widget sectionSetting()
                       bottomRight: Radius.circular(50)),
                 ))),
                   onPressed: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
                   },
                   child: Container(
                     padding: EdgeInsets.all(5),

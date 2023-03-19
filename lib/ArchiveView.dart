@@ -1,52 +1,41 @@
-import 'package:flutter/material.dart';
-import 'package:google_keep_notes_clone/CreateNoteView.dart';
-import 'package:google_keep_notes_clone/NoteView.dart';
-import 'package:google_keep_notes_clone/SearchPage.dart';
+import 'dart:ui';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_keep_notes_clone/SideMenuBar.dart';
 import 'package:google_keep_notes_clone/colors.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+import 'NoteView.dart';
+import 'CreateNoteView.dart';
+import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ArchiveView extends StatefulWidget {
+  const ArchiveView({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _ArchiveViewState createState() => _ArchiveViewState();
 }
 
-class _HomePageState extends State<HomePage> {
-
-
+class _ArchiveViewState extends State<ArchiveView> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
-  String note = " THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES";
-  String note1 = "]THIS IS NOTES THIS IS NOTES THIS IS NOTES";
-  
+  String note =
+      "THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE";
+  String note1 = "THIS IS NOTE THIS IS NOTE THIS IS NOTE";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,MaterialPageRoute(builder: (context) => CreateNoteView()) );
         },
         backgroundColor: cardColor,
         child: Icon(Icons.add , size: 45,),
       ),
-      
-      
-      
-      
-      
-        backgroundColor: bgColor,
         endDrawerEnableOpenDragGesture: true,
         key: _drawerKey,
         drawer: SideMenu(),
-      
-
-     body: SafeArea(
-          child: SingleChildScrollView(
+        backgroundColor: bgColor,
+        body: SafeArea(
+            child: SingleChildScrollView(
           child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,17 +66,10 @@ class _HomePageState extends State<HomePage> {
                                     Icons.menu,
                                     color: white,
                                   )),
-
-                             const SizedBox(
+                              SizedBox(
                                 width: 16,
                               ),
-
-                              GestureDetector(
-                                onTap: (() {
-                                  Navigator.push(context, MaterialPageRoute(builder: ((context) => SearchView())));
-                                }),
-
-                                child: Container(
+                              Container(
                                   height: 55,
                                   width: 200,
                                   child: Column(
@@ -102,23 +84,19 @@ class _HomePageState extends State<HomePage> {
                                               color: white.withOpacity(0.5),
                                               fontSize: 16),
                                         )
-                                      ])),
-                              )
-                             
+                                      ]))
                             ],
                           ),
-
-
-
-
-
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               children: [
                                 TextButton(
-                                    style: ButtonStyle(overlayColor:
-                                       MaterialStateColor.resolveWith((states) =>white.withOpacity(0.1)),
+                                    style: ButtonStyle(
+                                        overlayColor:
+                                            MaterialStateColor.resolveWith(
+                                                (states) =>
+                                                    white.withOpacity(0.1)),
                                         shape: MaterialStateProperty.all<
                                                 RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
@@ -130,31 +108,22 @@ class _HomePageState extends State<HomePage> {
                                       Icons.grid_view,
                                       color: white,
                                     )),
-
-
-                              const SizedBox(
+                                SizedBox(
                                   width: 9,
                                 ),
-
                                 CircleAvatar(
                                   radius: 16,
                                   backgroundColor: Colors.white,
                                 )
-
-
                               ],
                             ),
                           ),
                         ])),
-
-
-                NoteSectionAll(),    //* <-- Call  NoteSectionAll Widget
-                NotesListSection()   //* <-- Call  NotesListSection Widget
-
+                NoteSectionAll(),
+                NotesListSection()
               ],
             ),
           ),
-          
         )));
   }
 
@@ -168,13 +137,7 @@ class _HomePageState extends State<HomePage> {
 
 
 
-
-
-
-
-
-// TODO Create Widget NoteSectionAll
- Widget NoteSectionAll() {
+  Widget NoteSectionAll() {
     return Container(
         child: Column(
       children: [
@@ -210,7 +173,7 @@ class _HomePageState extends State<HomePage> {
               InkWell(
                 onTap: () 
                 {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
                 },
                 child: 
               Container(
@@ -256,11 +219,6 @@ class _HomePageState extends State<HomePage> {
 
 
 
-
-
-
-
-// TODO Create Widget NotesListSection
   Widget NotesListSection() {
     return Container(
         child: Column(
@@ -280,7 +238,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
         Container(
             padding: EdgeInsets.symmetric(
               horizontal: 10,
@@ -303,13 +260,10 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                             color: white,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold)
-                        ),
-
-                   const SizedBox(
+                            fontWeight: FontWeight.bold)),
+                    SizedBox(
                       height: 10,
                     ),
-
                     Text(
                       index.isEven
                           ? note.length > 250
@@ -324,7 +278,6 @@ class _HomePageState extends State<HomePage> {
             )),
       ],
     ));
-
   }
 
 
@@ -335,21 +288,5 @@ class _HomePageState extends State<HomePage> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
   
 }
-
-
