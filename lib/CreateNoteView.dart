@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes_clone/colors.dart';
+import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
+import 'package:google_keep_notes_clone/services/db.dart';
 
 class CreateNoteView extends StatefulWidget {
   const CreateNoteView({ Key? key }) : super(key: key);
@@ -9,6 +12,19 @@ class CreateNoteView extends StatefulWidget {
 }
 
 class _CreateNoteViewState extends State<CreateNoteView> {
+
+  TextEditingController Title = TextEditingController();
+  TextEditingController Content = TextEditingController();
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Title.dispose();
+    Content.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +35,13 @@ class _CreateNoteViewState extends State<CreateNoteView> {
          actions: [
            IconButton(
              splashRadius: 17,
-             onPressed: () {}, 
+             onPressed: () async {
+
+              await NotesDatabse.instance.InsertEntry(Note(pin: false, title: Title.text, content: Content.text, createdTime: DateTime.now()));
+
+              Navigator.pop(context);
+              
+             }, 
              icon: Icon(Icons.save_outlined))
             ],
           ),
@@ -32,6 +54,7 @@ class _CreateNoteViewState extends State<CreateNoteView> {
           child: Column(
             children: [
               TextField(
+                controller: Title,
                 cursorColor: white,
                 style: TextStyle(fontSize: 25, color: Colors.white , fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
@@ -48,6 +71,7 @@ class _CreateNoteViewState extends State<CreateNoteView> {
               Container(
                 height: 300,
                 child: TextField(
+                  controller: Content,
                   cursorColor: white,
                   keyboardType:  TextInputType.multiline,
                    minLines: 50,
