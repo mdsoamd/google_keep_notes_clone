@@ -51,7 +51,7 @@ DateTime? createdTime,
     );
   }
 
-  
+
 
   Map<String,Object?> toJson() {
     return {
@@ -68,4 +68,4 @@ DateTime? createdTime,
   //     pin BOOLEAN NOT NULL,
   //     title TEXT NOT NULL,
   //     content TEXT NOT NULL,
-  //     createdTime TEXT NOT NULL
+  //     createdTime TEXT NOT NULL webview

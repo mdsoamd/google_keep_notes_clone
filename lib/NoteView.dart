@@ -15,8 +15,15 @@ class NoteView extends StatefulWidget {
 }
 
 class _NoteViewState extends State<NoteView> {
-  String note =
-      "THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE THIS IS NOTE";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.note.pin);
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +34,13 @@ class _NoteViewState extends State<NoteView> {
         actions: [
           IconButton(
             splashRadius: 17,
-            onPressed: () {}, 
-            icon: Icon(Icons.push_pin_outlined)),
+            onPressed: ()async {
+
+             await NotesDatabse.instance.pinNote(widget.note);
+             Navigator.pop(context);
+              
+            }, 
+            icon: Icon(  widget.note.pin ? Icons.push_pin : Icons.push_pin_outlined )),
              IconButton(
             splashRadius: 17,
             onPressed: () {}, 

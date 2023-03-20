@@ -66,11 +66,30 @@ Future<Note?> readOneNote(int id) async{
    }
 }
 
+
+
+
+
+
 Future updateNote(Note note) async{
   final db = await instance.database;
 
  await db!.update(NotesImpNames.TableName, note.toJson(), where:  '${NotesImpNames.id} = ?' ,whereArgs: [note.id] );
 }
+
+
+
+
+
+
+Future pinNote(Note? note) async{
+  final db = await instance.database;
+
+ await db!.update(NotesImpNames.TableName,{NotesImpNames.pin: !note!.pin ? 1 : 0 }, where:  '${NotesImpNames.id} = ?' ,whereArgs: [note.id] );
+}
+
+
+
 
 
 
