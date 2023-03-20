@@ -5,7 +5,6 @@ import 'package:google_keep_notes_clone/SearchPage.dart';
 import 'package:google_keep_notes_clone/SideMenuBar.dart';
 import 'package:google_keep_notes_clone/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_keep_notes_clone/services/db.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -33,15 +32,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    createEntry();
   }
 
 
 
 
-  Future createEntry()async{
-     await NotesDatabse.instance.InsertEntry();
-  }
+
 
 
 
