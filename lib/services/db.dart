@@ -90,6 +90,15 @@ class NotesDatabse {
 
 
 
+//TODO Note Data Updata function
+Future<int> updateNote(int id) async{
+  final db = await instance.database;
+  return await db!.update("Notes",{"title":"THIS IS TITLE DATA UPDATE"},where:"id = ?",whereArgs: [id]);
+}
+
+
+
+
 
 
   

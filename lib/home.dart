@@ -34,8 +34,9 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     createEntry();
-    // getAllNotes();
-    getOneNotes();
+    getAllNotes();
+    // getOneNotes();
+    updateOneNotes();
   }
 
 
@@ -49,14 +50,18 @@ class _HomePageState extends State<HomePage> {
 
   
   
-Future<String?> getAllNotes()async{
+Future getAllNotes()async{
   await NotesDatabse.instance.readAllNotes();
 }
 
 
 
-Future<String?> getOneNotes()async{
+Future getOneNotes()async{
   await NotesDatabse.instance.readOneNote(1);
+}
+  
+Future updateOneNotes()async{
+  await NotesDatabse.instance.updateNote(3);
 }
   
   
