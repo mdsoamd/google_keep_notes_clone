@@ -5,6 +5,7 @@ import 'package:google_keep_notes_clone/SearchPage.dart';
 import 'package:google_keep_notes_clone/SideMenuBar.dart';
 import 'package:google_keep_notes_clone/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 import 'package:google_keep_notes_clone/services/db.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
@@ -33,44 +34,41 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    createEntry();
-    getAllNotes();
-    // getOneNotes();
-    updateOneNotes();
-    deleteOneNotes();
+ 
   }
 
 
 
 
-  Future createEntry()async{
-     await NotesDatabse.instance.InsertEntry();
-  }
+
+
+Future createEntry(Note note) async{
+  await NotesDatabse.instance.InsertEntry(note);
+}
 
 
 
-  
-  
-Future getAllNotes()async{
+Future getAllNotes() async{
   await NotesDatabse.instance.readAllNotes();
 }
 
 
-
-Future getOneNotes()async{
-  await NotesDatabse.instance.readOneNote(1);
-}
-  
-Future updateOneNotes()async{
-  await NotesDatabse.instance.updateNote(3);
+Future getOneNote(int id) async{
+  await NotesDatabse.instance.readOneNote(id);
 }
 
 
 
-Future deleteOneNotes()async{
-  await NotesDatabse.instance.delteNote(2);
+Future updateOneNote(Note note) async{
+  await NotesDatabse.instance.updateNote(note);
+
 }
-  
+
+
+
+Future deleteNote(Note note) async{
+  await NotesDatabse.instance.delteNote(note);
+}
   
   
   @override

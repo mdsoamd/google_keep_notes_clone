@@ -1,4 +1,5 @@
 
+import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -25,13 +26,16 @@ class NotesDatabse {
 
   
   Future _createDB(Database db, int version) async{
+    final idType  = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    final boolType = ' BOOLEAN NOT NULL';
+    final textType = 'TEXT NOT NULL';
     await db.execute('''
     CREATE TABLE Notes(
-      id INTEGER PRIMARY  KEY AUTOINCREMENT,
-      pin BOOLEAN NOT NULL,
-      title TEXT NOT NULL,
-      content TEXT NOT NULL,
-      createdTime TEXT NOT NULL
+      ${NotesImpNames.id} $idType,
+      ${NotesImpNames.pin} $boolType,
+      ${NotesImpNames.title} $textType,
+      ${NotesImpNames.content} $textType,
+      ${NotesImpNames.createdTime} $textType,
   
     )
     ''');
@@ -44,10 +48,10 @@ class NotesDatabse {
   
 
   //TODO Data Add & Inser Function
-  Future<bool?> InsertEntry()async{
+  Future<Note?> InsertEntry(Note note)async{
     final db = await instance.database;
-    await db!.insert("Notes", {"pin":0,"title":"THIS IS MY TITLE","content":"THIS IS MY NOTES CONTENT","createdTime":"01 Fer 2023"});
-    return true;
+    final id = await db!.insert(NotesImpNames.TableName,note.toJson());
+    return note.copy(id: id);
   }
 
 
@@ -58,13 +62,12 @@ class NotesDatabse {
 
 
 //TODO Data Read Function
-  Future<String> readAllNotes()async{
-    final db = await instance.database;
-    final orderBy = 'createdTime ASC';
-    final query_result = await db!.query("Notes",orderBy: orderBy);
-    print(query_result);
-    return "SUCCESFULL";
-  }
+Future<List<Note>> readAllNotes() async{
+  final db = await instance.database;
+  final orderBy = '${NotesImpNames.createdTime} ASC';
+  final query_result = await db!.query(NotesImpNames.TableName,orderBy: orderBy);
+  return query_result.map((json) => Note.fromJson(json)).toList();
+}
 
 
 
@@ -74,15 +77,19 @@ class NotesDatabse {
 
 
 //TODO Data ReadOne Function
-  Future<String?> readOneNote(int id)async{
-   final db = await instance.database;
-   final map = await db!.query("Notes",
-   columns:['title'] ,
-   where: "id = ?",
-   whereArgs: [id]
-
+  Future<Note?> readOneNote(int id)async{
+  final db = await instance.database;
+  final map = await db!.query(NotesImpNames.TableName ,
+   columns: NotesImpNames.values ,
+   where: '${NotesImpNames.id} = ?',
+   whereArgs: [id] 
    );
-   print(map);
+
+   if(map.isNotEmpty){
+     return Note.fromJson(map.first);
+   }else{
+     return null;
+   }
 
   }
 
@@ -91,11 +98,10 @@ class NotesDatabse {
 
 
 //TODO Note Data Updata function
-Future<int> updateNote(int id) async{
+Future updateNote(Note note) async{
   final db = await instance.database;
-  return await db!.update("Notes",{"title":"THIS IS TITLE DATA UPDATE"},where:"id = ?",whereArgs: [id]);
+  await db!.update(NotesImpNames.TableName, note.toJson(), where:  '${NotesImpNames.id} = ?' ,whereArgs: [note.id] );
 }
-
 
 
 
@@ -104,10 +110,23 @@ Future<int> updateNote(int id) async{
 
 
 //TODO Delete Note function
-Future delteNote(int id) async{
+Future delteNote(Note note) async{
   final db = await instance.database;
-  await db!.delete("Notes", where: 'id = ?', whereArgs: [id]);
+  await db!.delete(NotesImpNames.TableName, where: '${NotesImpNames.id}= ?', whereArgs: [note.id]);
 }
+
+
+
+
+
+
+
+Future closeDB() async{
+  final db = await instance.database;
+  db!.close();
+}
+
+
 
 
 
