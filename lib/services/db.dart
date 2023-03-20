@@ -73,8 +73,10 @@ Future updateNote(Note note) async{
 }
 
 
-Future<List<int>> getNoteString(String query) async{
 
+
+
+Future<List<int>> getNoteString(String query) async{
   final db = await instance.database;
   final result = await db!.query(NotesImpNames.TableName);
   List<int> resultIds = [];

@@ -5,8 +5,8 @@ import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 
 
 class NoteView extends StatefulWidget {
-  Note note;
-  NoteView({Key? key,required this.note}) : super(key: key);
+   Note note;
+  NoteView({required this.note});
 
   @override
   State<NoteView> createState() => _NoteViewState();
