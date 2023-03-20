@@ -18,8 +18,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+ 
+  bool isLoading = true;
 
-
+  late List<Note> notesList;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   String note = " THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES";
@@ -33,8 +35,12 @@ class _HomePageState extends State<HomePage> {
 @override
   void initState() {
     // TODO: implement initState
+    createEntry(Note(pin: false, title:'hello', content: 'somad', createdTime:DateTime.now()));
+    getAllNotes();
+   
+    
     super.initState();
- 
+   
   }
 
 
@@ -49,8 +55,14 @@ Future createEntry(Note note) async{
 
 
 Future getAllNotes() async{
-  await NotesDatabse.instance.readAllNotes();
+  this.notesList =  await NotesDatabse.instance.readAllNotes();
+
+  setState(() {
+    isLoading = false;
+  });
 }
+
+
 
 
 Future getOneNote(int id) async{
@@ -73,7 +85,7 @@ Future deleteNote(Note note) async{
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLoading ? Scaffold( backgroundColor: bgColor,  body: Center(child: CircularProgressIndicator(color: Colors.white,),),) : Scaffold(
 
        floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -249,7 +261,7 @@ Future deleteNote(Note note) async{
             child: StaggeredGridView.countBuilder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount: notesList.length,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
               crossAxisCount: 4,
@@ -269,7 +281,7 @@ Future deleteNote(Note note) async{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("HEADING",
+                    Text(notesList[index].title,
                         style: TextStyle(
                             color: white,
                             fontSize: 20,
@@ -277,12 +289,9 @@ Future deleteNote(Note note) async{
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      index.isEven
-                          ? note.length > 250
-                              ? "${note.substring(0, 250)}..."
-                              : note
-                          : note1,
+                    Text(notesList[index].content.length > 250
+                              ? "${notesList[index].content.substring(0, 250)}..."
+                              : notesList[index].content,
                       style: TextStyle(color: white),
                     )
                   ],
