@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes_clone/EditNoteView.dart';
 import 'package:google_keep_notes_clone/colors.dart';
 import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
+import 'package:google_keep_notes_clone/services/db.dart';
 
 
 class NoteView extends StatefulWidget {
@@ -31,6 +33,13 @@ class _NoteViewState extends State<NoteView> {
             splashRadius: 17,
             onPressed: () {}, 
             icon: Icon(Icons.archive_outlined)),
+            IconButton(
+            splashRadius: 17,
+            onPressed: ()async{
+              await NotesDatabse.instance.delteNote(widget.note);
+              Navigator.pop(context);
+            }, 
+            icon: Icon(Icons.delete_forever_outlined)),
             IconButton(
             splashRadius: 17,
             onPressed: () {
