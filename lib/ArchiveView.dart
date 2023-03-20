@@ -173,7 +173,7 @@ class _ArchiveViewState extends State<ArchiveView> {
               InkWell(
                 onTap: () 
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
                 },
                 child: 
               Container(

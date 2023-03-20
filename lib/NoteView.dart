@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes_clone/EditNoteView.dart';
 import 'package:google_keep_notes_clone/colors.dart';
+import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 
 
 class NoteView extends StatefulWidget {
-  const NoteView({Key? key}) : super(key: key);
+  Note note;
+  NoteView({Key? key,required this.note}) : super(key: key);
 
   @override
   State<NoteView> createState() => _NoteViewState();
@@ -43,9 +45,9 @@ class _NoteViewState extends State<NoteView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children : [
-            Text("HEADING" , style: TextStyle(color: Colors.white , fontSize: 23 , fontWeight: FontWeight.bold),),
+            Text(widget.note.title , style: TextStyle(color: Colors.white , fontSize: 23 , fontWeight: FontWeight.bold),),
             SizedBox(height: 10,),
-            Text(note,style: TextStyle(color: Colors.white),)
+            Text(widget.note.content,style: TextStyle(color: Colors.white),)
           ]
           
         ),

@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
  
   bool isLoading = true;
-
+ 
   late List<Note> notesList;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
@@ -270,7 +270,7 @@ Future deleteNote(Note note) async{
               InkWell(
                 onTap: () 
                 {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView(note: notesList[index],)));
                 },
                 child: 
               Container(
