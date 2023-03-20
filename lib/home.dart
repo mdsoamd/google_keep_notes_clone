@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 @override
   void initState() {
     // TODO: implement initState
-    createEntry(Note(pin: false, title:'hello', content: 'somad', createdTime:DateTime.now()));
+    createEntry(Note(pin: false, title:'MY Fires Note ', content: 'This is my note content', createdTime:DateTime.now()));
     getAllNotes();
    
     
