@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     getAllNotes();
     // getOneNotes();
     updateOneNotes();
+    deleteOneNotes();
   }
 
 
@@ -62,6 +63,12 @@ Future getOneNotes()async{
   
 Future updateOneNotes()async{
   await NotesDatabse.instance.updateNote(3);
+}
+
+
+
+Future deleteOneNotes()async{
+  await NotesDatabse.instance.delteNote(2);
 }
   
   

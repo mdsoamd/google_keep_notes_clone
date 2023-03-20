@@ -101,5 +101,15 @@ Future<int> updateNote(int id) async{
 
 
 
+
+
+//TODO Delete Note function
+Future delteNote(int id) async{
+  final db = await instance.database;
+  await db!.delete("Notes", where: 'id = ?', whereArgs: [id]);
+}
+
+
+
   
 }
