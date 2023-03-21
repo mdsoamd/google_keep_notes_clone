@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>831654821280-usnliq522ikiq6q5l7hgc41qmodldhju.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.831654821280-usnliq522ikiq6q5l7hgc41qmodldhju</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD1vDIwMaCFMwPnNqr6bS9OW4WIA99nKM0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>831654821280</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.googleKeepNotesClone</string>
+	<key>PROJECT_ID</key>
+	<string>keep-notes-clone-3454e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>keep-notes-clone-3454e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:831654821280:ios:17e3c08d4329dc1252f8c5</string>
+</dict>
+</plist>
