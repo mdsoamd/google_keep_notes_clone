@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_keep_notes_clone/ArchiveView.dart';
 import 'package:google_keep_notes_clone/EditNoteView.dart';
 import 'package:google_keep_notes_clone/colors.dart';
+import 'package:google_keep_notes_clone/home.dart';
 import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 import 'package:google_keep_notes_clone/services/db.dart';
 
@@ -32,19 +34,35 @@ class _NoteViewState extends State<NoteView> {
         backgroundColor: bgColor,
         elevation: 0.0,
         actions: [
+
+          
+           //* Pin Button      
           IconButton(
             splashRadius: 17,
             onPressed: ()async {
 
              await NotesDatabse.instance.pinNote(widget.note);
-             Navigator.pop(context);
+             Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomePage())));
               
             }, 
             icon: Icon(  widget.note.pin ? Icons.push_pin : Icons.push_pin_outlined )),
+
+
+
+
+              //* Archive Button
              IconButton(
             splashRadius: 17,
-            onPressed: () {}, 
-            icon: Icon(Icons.archive_outlined)),
+            onPressed: ()async {
+              await NotesDatabse.instance.archNote(widget.note);
+             Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomePage())));
+            }, 
+            icon: Icon(widget.note.isArchieve? Icons.archive: Icons.archive_outlined)),
+
+
+
+
+           //* Delete Button
             IconButton(
             splashRadius: 17,
             onPressed: ()async{
@@ -52,12 +70,20 @@ class _NoteViewState extends State<NoteView> {
               Navigator.pop(context);
             }, 
             icon: Icon(Icons.delete_forever_outlined)),
+
+
+
+            //* Edit Button
             IconButton(
             splashRadius: 17,
             onPressed: () {
                Navigator.push(context, MaterialPageRoute(builder: (context) => EditNoteView(note: widget.note,)));
             }, 
             icon: Icon(Icons.edit_outlined))
+
+
+
+
         ],
       ),
 

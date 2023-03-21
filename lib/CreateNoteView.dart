@@ -37,7 +37,7 @@ class _CreateNoteViewState extends State<CreateNoteView> {
              splashRadius: 17,
              onPressed: () async {
 
-              await NotesDatabse.instance.InsertEntry(Note(pin: false, title: Title.text, content: Content.text, createdTime: DateTime.now()));
+              await NotesDatabse.instance.InsertEntry(Note(pin: false,isArchieve: false, title: Title.text, content: Content.text, createdTime: DateTime.now()));
 
               Navigator.pop(context);
               

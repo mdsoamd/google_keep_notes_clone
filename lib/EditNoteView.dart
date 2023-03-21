@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes_clone/NoteView.dart';
 import 'package:google_keep_notes_clone/colors.dart';
+import 'package:google_keep_notes_clone/home.dart';
 import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 import 'package:google_keep_notes_clone/services/db.dart';
 
@@ -41,9 +42,9 @@ class _EditNoteViewState extends State<EditNoteView> {
              splashRadius: 17,
              onPressed: () async {
 
-               Note newNote = Note(content: NewNoteDet , title: NewTitle , createdTime:  widget.note.createdTime, pin: false , id: widget.note.id);
+               Note newNote = Note(content: NewNoteDet , title: NewTitle , createdTime:  widget.note.createdTime, pin: false ,isArchieve: false, id: widget.note.id);
                await NotesDatabse.instance.updateNote(newNote);
-               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NoteView(note: newNote,)));
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
               
              }, 
              icon: Icon(Icons.save_outlined))
