@@ -4,6 +4,9 @@ import 'package:google_keep_notes_clone/services/firestore_db.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+// uniqueID
+
+
 class NotesDatabse {
   static final NotesDatabse instance = NotesDatabse._init();
   static Database? _database;
@@ -31,6 +34,7 @@ class NotesDatabse {
     await db.execute('''
     CREATE TABLE Notes(
       ${NotesImpNames.id} $idType,
+      ${NotesImpNames.uniqueID} $textType,
       ${NotesImpNames.pin} $boolType,
       ${NotesImpNames.isArchieve} $boolType,
       ${NotesImpNames.title} $textType,
@@ -42,9 +46,9 @@ class NotesDatabse {
   }
 
     Future<Note?> InsertEntry(Note note) async{
-      await FireDB().createNewNoteFirestore(note);
       final db = await instance.database;
       final id  = await db!.insert(NotesImpNames.TableName, note.toJson());
+      await FireDB().createNewNoteFirestore(note);
        return note.copy(id:id);
     }
 
@@ -149,7 +153,7 @@ Future delteNote(Note? note) async{
   await FireDB().deleteNoteFirestore(note!);
   final db = await instance.database;
 
-  await db!.delete(NotesImpNames.TableName, where: '${NotesImpNames.id}= ?', whereArgs: [note!.id]);
+  await db!.delete(NotesImpNames.TableName, where: '${NotesImpNames.id}= ?', whereArgs: [note.id]);
 }
 
 

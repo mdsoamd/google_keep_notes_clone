@@ -87,16 +87,19 @@ class _NoteViewState extends State<NoteView> {
         ],
       ),
 
-      body: Container(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children : [
-            Text(widget.note.title , style: TextStyle(color: Colors.white , fontSize: 23 , fontWeight: FontWeight.bold),),
-            SizedBox(height: 10,),
-            Text(widget.note.content,style: TextStyle(color: Colors.white),)
-          ]
-          
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Container(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children : [
+              Text(widget.note.title , style: TextStyle(color: Colors.white , fontSize: 23 , fontWeight: FontWeight.bold),),
+              SizedBox(height: 10,),
+              Text(widget.note.content,style: TextStyle(color: Colors.white),)
+            ]
+            
+          ),
         ),
       ),
     );

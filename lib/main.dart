@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes_clone/firebase_options.dart';
@@ -48,16 +49,18 @@ class _MyAppState extends State<MyApp> {
         getLoggedInState();
 
   }
-
+  
   @override
   Widget build(BuildContext context) {
+     FirebaseAuth _auth  = FirebaseAuth.instance;
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: isLogIn ? HomePage():Login(),
-      home: isLogIn ? Login(): HomePage(),
+      home: _auth.currentUser != null ? HomePage():Login(),
+      
+      // home: isLogIn ? Login(): HomePage(),
     );
   }
 }

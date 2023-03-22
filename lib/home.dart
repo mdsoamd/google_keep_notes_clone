@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
  
   late List<Note> notesList;
   late String? ImgUrl;
+  bool isStaggered = true;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   String note = " THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES";
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 @override
   void initState() {
     // TODO: implement initState
-    createEntry(Note(pin: false,isArchieve: false, title:'isArchieve Check ', content: 'This is the isArchieve note content', createdTime:DateTime.now()));
+    // createEntry(Note(pin: false,isArchieve: false, title:'isArchieve Check ', content: 'This is the isArchieve note content', createdTime:DateTime.now()));
     getAllNotes();
    
     
@@ -165,7 +166,7 @@ Future deleteNote(Note note) async{
 
                                 child: Container(
                                   height: 55,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.height / 5.5,
                                   child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -201,7 +202,11 @@ Future deleteNote(Note note) async{
                                           borderRadius:
                                               BorderRadius.circular(50.0),
                                         ))),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        isLoading = !isStaggered;
+                                      });
+                                    },
                                     child: Icon(
                                       Icons.grid_view,
                                       color: white,
@@ -215,8 +220,8 @@ Future deleteNote(Note note) async{
                                 GestureDetector(
 
                                   onTap: (){
-                                    signOut();
-                                    LocalDataSaver.saveLoginData(false);
+                                   signOut();
+                                   LocalDataSaver.saveLoginData(false);
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
                                     },
                                   
@@ -237,8 +242,8 @@ Future deleteNote(Note note) async{
                         ])),
 
 
-                NoteSectionAll(),    //* <-- Call  NoteSectionAll Widget
-                NotesListSection()   //* <-- Call  NotesListSection Widget
+               isStaggered ? NoteSectionAll() :     //* <-- Call  NoteSectionAll Widget
+                NotesListSection()                //* <-- Call  NotesListSection Widget
 
               ],
             ),
@@ -357,7 +362,7 @@ Future deleteNote(Note note) async{
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "LIST VIEW",
+                "All",
                 style: TextStyle(
                     color: white.withOpacity(0.5),
                     fontSize: 13,
@@ -375,7 +380,7 @@ Future deleteNote(Note note) async{
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount:notesList.length ,
               itemBuilder: (context, index) => Container(
                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.only(bottom: 10),
@@ -385,7 +390,7 @@ Future deleteNote(Note note) async{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("HEADING",
+                    Text(notesList[index].title,
                         style: TextStyle(
                             color: white,
                             fontSize: 20,
@@ -396,12 +401,9 @@ Future deleteNote(Note note) async{
                       height: 10,
                     ),
 
-                    Text(
-                      index.isEven
-                          ? note.length > 250
-                              ? "${note.substring(0, 250)}..."
-                              : note
-                          : note1,
+                    Text(notesList[index].content.length > 250
+                              ? "${notesList[index].content.substring(0, 250)}..."
+                              : notesList[index].content,
                       style: TextStyle(color: white),
                     )
                   ],

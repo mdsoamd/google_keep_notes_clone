@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes_clone/colors.dart';
+import 'package:google_keep_notes_clone/home.dart';
 import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
 import 'package:google_keep_notes_clone/services/db.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateNoteView extends StatefulWidget {
   const CreateNoteView({ Key? key }) : super(key: key);
@@ -15,6 +17,12 @@ class _CreateNoteViewState extends State<CreateNoteView> {
 
   TextEditingController Title = TextEditingController();
   TextEditingController Content = TextEditingController();
+
+  
+// Create uuid object
+var uuid = Uuid();
+
+
 
 
   @override
@@ -37,9 +45,9 @@ class _CreateNoteViewState extends State<CreateNoteView> {
              splashRadius: 17,
              onPressed: () async {
 
-              await NotesDatabse.instance.InsertEntry(Note(pin: false,isArchieve: false, title: Title.text, content: Content.text, createdTime: DateTime.now()));
+              await NotesDatabse.instance.InsertEntry(Note(pin: false,isArchieve: false, title: Title.text,uniqueID:uuid.v1(),content: Content.text, createdTime: DateTime.now()));
 
-              Navigator.pop(context);
+              Navigator.pushReplacement(context, MaterialPageRoute(builder:((context) => HomePage())));
               
              }, 
              icon: Icon(Icons.save_outlined))

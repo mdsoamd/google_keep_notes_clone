@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NotesImpNames{
 static final String id = "id";
 static final String pin = "pin";
 static final String title = "title";
+static final String uniqueID = "uniqueID";
 static final String content = "content";
 static final String isArchieve = "isArchieve";
 static final String createdTime = "createdTime";
@@ -16,6 +19,7 @@ class Note{
   final bool pin;
   final bool isArchieve;
   final String title;
+  final String uniqueID;
   final String content;
   final DateTime createdTime;
 
@@ -24,6 +28,7 @@ this.id,
 required this.pin,
 required this.isArchieve,
 required this.title,
+required this.uniqueID,
 required this.content,
 required this.createdTime,
   });
@@ -32,6 +37,7 @@ Note copy({
   int? id,
   bool? pin,
   bool? isArchieve,
+  String? uniqueID,
   String? title,
   String? content,
 DateTime? createdTime,
@@ -40,6 +46,7 @@ DateTime? createdTime,
    pin:pin ?? this.pin,
    isArchieve:isArchieve ?? this.isArchieve,
    title:  title ?? this.title,
+   uniqueID:  uniqueID ?? this.uniqueID,
    content:  content ?? this.content,
    createdTime:  createdTime ?? this.createdTime
    );
@@ -52,8 +59,10 @@ DateTime? createdTime,
                 pin : json[NotesImpNames.pin] ==1,
                 isArchieve : json[NotesImpNames.isArchieve] ==1,
                 title: json[NotesImpNames.title] as String,
+                uniqueID: json[NotesImpNames.uniqueID] as String,
                 content: json[NotesImpNames.content] as String,
                 createdTime: DateTime.parse(json[NotesImpNames.createdTime] as String)
+      
     );
   }
 
@@ -63,6 +72,7 @@ DateTime? createdTime,
       NotesImpNames.pin : pin ? 1 : 0,
       NotesImpNames.isArchieve : isArchieve ? 1 : 0,
       NotesImpNames.title : title,
+      NotesImpNames.uniqueID : uniqueID,
     
       NotesImpNames.content : content,
       NotesImpNames.createdTime : createdTime.toIso8601String()

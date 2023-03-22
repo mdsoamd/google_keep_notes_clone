@@ -42,7 +42,7 @@ class _EditNoteViewState extends State<EditNoteView> {
              splashRadius: 17,
              onPressed: () async {
 
-               Note newNote = Note(content: NewNoteDet , title: NewTitle , createdTime:  widget.note.createdTime, pin: false ,isArchieve: false, id: widget.note.id);
+               Note newNote = Note(content: NewNoteDet , title: NewTitle , uniqueID: widget.note.uniqueID, createdTime:  widget.note.createdTime, pin: false ,isArchieve: false, id: widget.note.id);
                await NotesDatabse.instance.updateNote(newNote);
                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
               

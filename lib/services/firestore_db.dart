@@ -9,11 +9,12 @@ final FirebaseAuth _auth  = FirebaseAuth.instance;
 
 createNewNoteFirestore(Note note) async{
 final User? current_user =  _auth.currentUser;
-  await FirebaseFirestore.instance.collection("notes").doc(current_user!.uid).collection("usernotes").doc(note.id.toString()).set(
+  await FirebaseFirestore.instance.collection("notes").doc(current_user!.uid).collection("usernotes").doc(note.uniqueID).set(
   {
     "Title" : note.title,
     "content" : note.content,
     "date" : DateTime.now(),
+    "uniqueID" : note.uniqueID
 
   }).then((_){
     print("DATA ADDED SUCCESSFULLY");
@@ -29,11 +30,12 @@ final User? current_user =  _auth.currentUser;
 
 
 getAllStoredNotes() async{
+  List<Note> data = [];
 final User? current_user =  _auth.currentUser;
-    await FirebaseFirestore.instance.collection("notes").doc(current_user!.uid).collection("usernotes").orderBy("date").get().then((querySnapshot) {
+    await FirebaseFirestore.instance.collection("notes").doc(current_user!.uid).collection("usernotes").get().then((querySnapshot) {
     querySnapshot.docs.forEach((result) {
       Map note = result.data();
-       NotesDatabse.instance.InsertEntry(Note(title:note["Title"] , content : note["content"] , createdTime: note["date"] , pin: false, isArchieve: false));  //Add Notes In Database
+      NotesDatabse.instance.InsertEntry(Note(title:note["Title"] ,uniqueID: note['uniqueID'], content : note["content"] , createdTime: note["date"] , pin: false, isArchieve: false));  //Add Notes In Database
     });
   });
    
@@ -48,7 +50,7 @@ updateNoteFirestore(Note note ) async{
 final User? current_user =  _auth.currentUser;
    await FirebaseFirestore.instance
         .collection("notes")
-        .doc(current_user!.uid).collection("usernotes").doc(note.id.toString())
+        .doc(current_user!.uid).collection("usernotes").doc(note.uniqueID)
         .update({"title": note.title.toString() , "content" : note.content}).then((_) {
       print("DATA ADDED SUCCESFULLY");
     });
@@ -58,7 +60,7 @@ final User? current_user =  _auth.currentUser;
 
 deleteNoteFirestore(Note note) async{
   final User? current_user =  _auth.currentUser;
-    await FirebaseFirestore.instance.collection("notes").doc(current_user!.uid.toString()).collection("usernotes").doc(note.id.toString()).delete().then((_) {
+    await FirebaseFirestore.instance.collection("notes").doc(current_user!.uid.toString()).collection("usernotes").doc(note.uniqueID).delete().then((_) {
     print("DATA DELETED SUCCESS FULLY");
   });
 }
