@@ -67,7 +67,7 @@ class _NoteViewState extends State<NoteView> {
             splashRadius: 17,
             onPressed: ()async{
               await NotesDatabse.instance.delteNote(widget.note);
-              Navigator.pop(context);
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomePage())));
             }, 
             icon: Icon(Icons.delete_forever_outlined)),
 

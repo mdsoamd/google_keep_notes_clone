@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_keep_notes_clone/home.dart';
 import 'package:google_keep_notes_clone/services/auth.dart';
+import 'package:google_keep_notes_clone/services/firestore_db.dart';
+import 'package:google_keep_notes_clone/services/login_info.dart';
 class Login extends StatefulWidget {
 
 
@@ -23,6 +25,12 @@ class _LoginState extends State<Login> {
           children: [
             SignInButton(Buttons.Google, onPressed:() async{
               await signInWithGoogle();
+               final User? currentUser = await _auth.currentUser;
+               LocalDataSaver.saveLoginData(true);
+               LocalDataSaver.saveImg(currentUser!.photoURL.toString());
+               LocalDataSaver.saveMail(currentUser.email.toString());
+               LocalDataSaver.saveName(currentUser.displayName.toString());
+               await FireDB().getAllStoredNotes();
                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
             })
           ],

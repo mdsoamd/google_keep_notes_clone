@@ -36,8 +36,7 @@ class _MyAppState extends State<MyApp> {
     await LocalDataSaver.getLogData().then((value){
  
       setState(() {
-          isLogIn = value!;
-          // isLogIn = value.toString() == "null";
+          isLogIn = value.toString() == "null";
       });
     });
   }
@@ -57,6 +56,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      // home: isLogIn ? HomePage():Login(),
       home: isLogIn ? Login(): HomePage(),
     );
   }

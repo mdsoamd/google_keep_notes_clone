@@ -1,5 +1,6 @@
 
 import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
+import 'package:google_keep_notes_clone/services/firestore_db.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -41,10 +42,15 @@ class NotesDatabse {
   }
 
     Future<Note?> InsertEntry(Note note) async{
+      await FireDB().createNewNoteFirestore(note);
       final db = await instance.database;
       final id  = await db!.insert(NotesImpNames.TableName, note.toJson());
-    return note.copy(id:id);
+       return note.copy(id:id);
     }
+
+
+
+
 
 Future<List<Note>> readAllNotes() async{
   final db = await instance.database;
@@ -52,6 +58,11 @@ Future<List<Note>> readAllNotes() async{
   final query_result = await db!.query(NotesImpNames.TableName,orderBy: orderBy);
   return query_result.map((json) => Note.fromJson(json)).toList();
 }
+
+
+
+
+
 
 Future<Note?> readOneNote(int id) async{
   final db = await instance.database;
@@ -73,6 +84,7 @@ Future<Note?> readOneNote(int id) async{
 
 
 Future updateNote(Note note) async{
+  await FireDB().updateNoteFirestore(note);
   final db = await instance.database;
 
  await db!.update(NotesImpNames.TableName, note.toJson(), where:  '${NotesImpNames.id} = ?' ,whereArgs: [note.id] );
@@ -134,6 +146,7 @@ Future<List<int>> getNoteString(String query) async{
 
 
 Future delteNote(Note? note) async{
+  await FireDB().deleteNoteFirestore(note!);
   final db = await instance.database;
 
   await db!.delete(NotesImpNames.TableName, where: '${NotesImpNames.id}= ?', whereArgs: [note!.id]);

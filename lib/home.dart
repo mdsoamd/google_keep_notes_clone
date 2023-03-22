@@ -5,8 +5,12 @@ import 'package:google_keep_notes_clone/SearchPage.dart';
 import 'package:google_keep_notes_clone/SideMenuBar.dart';
 import 'package:google_keep_notes_clone/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_keep_notes_clone/login.dart';
 import 'package:google_keep_notes_clone/model/MyNoteModel.dart';
+import 'package:google_keep_notes_clone/services/auth.dart';
 import 'package:google_keep_notes_clone/services/db.dart';
+import 'package:google_keep_notes_clone/services/firestore_db.dart';
+import 'package:google_keep_notes_clone/services/login_info.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -22,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   bool isLoading = true;
  
   late List<Note> notesList;
+  late String? ImgUrl;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   String note = " THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES THIS IS NOTES";
@@ -55,13 +60,24 @@ Future createEntry(Note note) async{
 
 
 Future getAllNotes() async{
-  this.notesList =  await NotesDatabse.instance.readAllNotes();
 
+LocalDataSaver.getImg().then((value){
+  if(this.mounted){
   setState(() {
+    ImgUrl = value;
+  });
+  }
+});
+
+
+ this.notesList =  await NotesDatabse.instance.readAllNotes();
+if(this.mounted){
+setState(() {
+   
     isLoading = false;
   });
+  }
 }
-
 
 
 
@@ -149,7 +165,7 @@ Future deleteNote(Note note) async{
 
                                 child: Container(
                                   height: 55,
-                                  width: 200,
+                                  width: 150,
                                   child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -193,12 +209,25 @@ Future deleteNote(Note note) async{
 
 
                               const SizedBox(
-                                  width: 9,
+                                  width: 5,
                                 ),
 
-                                CircleAvatar(
-                                  radius: 16,
-                                  backgroundColor: Colors.white,
+                                GestureDetector(
+
+                                  onTap: (){
+                                    signOut();
+                                    LocalDataSaver.saveLoginData(false);
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
+                                    },
+                                  
+                                  
+                                  child: CircleAvatar(
+                                      onBackgroundImageError: (Object, StackTrace){
+                                        print("Ok");
+                                        },
+                                        radius: 16,
+                                        backgroundImage: NetworkImage(ImgUrl.toString()),
+                                  ),
                                 )
 
 
